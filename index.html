@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Производство игрушек и мерча на заказ для бизнеса | Topson – от идеи до тиража</title>
+<meta name="description" content="Производство игрушек, корпоративных сувениров и B2B-мерча оптом в России: игрушки с логотипом для программ лояльности, детских наборов и промо. 10+ лет, 50+ крупных клиентов, 1000+ проектов.">
+<link rel="icon" href="img/logo.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;800;900&family=Manrope:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --pink:#ff4fa3; --yellow:#ffd93b; --blue:#1fa2ff; --mint:#4fe3b0; --violet:#8b5cf6; --ink:#1b1030; --cream:#fff6ea; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body { font-family:Manrope, system-ui, sans-serif; color:var(--ink); background:#ffb36b; overflow-x:hidden; }
+  img { display:block; max-width:100%; }
+  a { color:inherit; }
+
+  /* text always stays inside its box: words may wrap/hyphenate, and .fit headings shrink in JS if still too wide */
+  h1, h2, h3, p, b, span, a { overflow-wrap:break-word; hyphens:auto; }
+  .fit, .lead { overflow-wrap:normal; hyphens:manual; }
+  * { min-width:0; }
+
+  canvas#film { position:fixed; inset:0; width:100vw; height:100vh; z-index:0; }
+  .veil { position:fixed; inset:0; z-index:1; pointer-events:none;
+          background:radial-gradient(120% 80% at 50% 115%, rgba(27,16,48,.32), transparent 60%); }
+
+  header { position:fixed; top:0; left:0; right:0; z-index:20; display:flex; align-items:center; gap:16px; padding:14px 4vw; }
+  .logo { display:flex; align-items:center; gap:10px; text-decoration:none; background:#fff; padding:6px 16px 6px 8px;
+          border-radius:999px; box-shadow:0 4px 0 rgba(27,16,48,.22); }
+  .logo img { width:38px; height:38px; object-fit:contain; }
+  .logo b { font-family:Unbounded; font-weight:900; font-size:19px; letter-spacing:.03em;
+            background:linear-gradient(90deg,#f4b13e,#e040c8,#7b61ff); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  header nav { margin-left:auto; display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
+  .pill { font-weight:800; text-decoration:none; color:var(--ink); background:#fff; padding:10px 16px; font-size:15px;
+          border-radius:999px; box-shadow:0 4px 0 rgba(27,16,48,.22); transition:transform .2s; white-space:nowrap; }
+  .pill:hover { transform:translateY(-2px) rotate(-2deg); }
+  .pill.hot { background:var(--pink); color:#fff; box-shadow:0 4px 0 #b8226d; }
+  .progress { position:fixed; left:0; top:0; height:5px; z-index:21; width:0;
+              background:linear-gradient(90deg,var(--pink),var(--yellow),var(--mint),var(--blue)); }
+
+  main { position:relative; z-index:2; }
+  section { min-height:100vh; display:flex; align-items:center; padding:14vh 6vw; position:relative; }
+  .layer { will-change:transform; }
+
+  h1, h2 { font-family:Unbounded; font-weight:900; line-height:1; letter-spacing:-.02em; }
+  h1 { font-size:clamp(36px, 6.2vw, 100px); color:#fff; text-shadow:0 5px 0 rgba(27,16,48,.35); }
+  h1 em, h2 em { font-style:normal; color:var(--yellow); }
+  h2 { font-size:clamp(28px, 4.4vw, 68px); }
+  .lead { font-size:clamp(17px, 1.5vw, 21px); max-width:600px; margin-top:22px; color:#fff; font-weight:800;
+          text-shadow:0 2px 12px rgba(27,16,48,.45); }
+  .row { display:flex; gap:12px; flex-wrap:wrap; margin-top:26px; }
+
+  .card { background:rgba(255,255,255,.93); backdrop-filter:blur(10px); border-radius:36px; padding:clamp(24px,3.4vw,46px);
+          box-shadow:0 12px 0 rgba(27,16,48,.16), 0 30px 80px rgba(27,16,48,.2); width:min(640px, 100%); }
+  .card.wide { width:min(900px, 100%); }
+  .card p { font-size:clamp(16px,1.25vw,18px); line-height:1.55; margin-top:14px; }
+  .kicker { display:inline-block; font-family:Unbounded; font-weight:800; font-size:13px; text-transform:uppercase; letter-spacing:.08em;
+            background:var(--yellow); padding:6px 12px; border-radius:999px; margin-bottom:16px; }
+  .right { margin-left:auto; }
+
+  .stats { display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:18px; width:100%; }
+  .stat { border-radius:32px; padding:clamp(20px,2.4vw,32px) clamp(16px,2vw,26px); color:#fff; box-shadow:0 10px 0 rgba(27,16,48,.2); }
+  .stat b { display:block; font-family:Unbounded; font-weight:900; font-size:clamp(34px,4.6vw,72px); line-height:1; }
+  .stat span { font-weight:800; font-size:16px; display:block; margin-top:10px; }
+  .s1{background:var(--pink)} .s2{background:var(--blue)} .s3{background:var(--violet)} .s4{background:var(--mint); color:var(--ink)}
+
+  .grid4 { display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:18px; width:min(1000px,100%); }
+  .tile { background:#fff; border-radius:30px; padding:clamp(20px,2.2vw,30px); box-shadow:0 10px 0 rgba(27,16,48,.16); }
+  .tile i { font-style:normal; font-family:Unbounded; font-weight:900; font-size:15px; display:inline-block;
+            background:var(--yellow); padding:6px 12px; border-radius:999px; }
+  .tile h3 { font-family:Unbounded; font-size:clamp(18px,1.6vw,22px); line-height:1.15; margin:14px 0 8px; }
+  .tile p { line-height:1.5; }
+
+  .process { display:grid; grid-template-columns:1fr 1fr; gap:18px; width:100%; align-items:start; }
+  .process .card { width:auto; }
+  .process h3 { font-family:Unbounded; font-size:clamp(20px,1.8vw,26px); margin-bottom:8px; }
+  .steps { list-style:none; counter-reset:s; margin-top:10px; }
+  .steps li { counter-increment:s; display:grid; grid-template-columns:44px 1fr; gap:12px; align-items:start; padding:12px 0;
+              border-top:2px dashed rgba(27,16,48,.12); line-height:1.45; }
+  .steps li::before { content:counter(s); font-family:Unbounded; font-weight:900; color:#fff; background:var(--pink);
+                      width:36px; height:36px; border-radius:50%; display:grid; place-items:center; }
+  .process .card:last-child .steps li::before { background:var(--blue); }
+
+  .plate { display:inline-block; background:rgba(27,16,48,.42); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+           border-radius:32px; padding:clamp(18px,2.6vw,36px); max-width:100%; }
+  .plate { box-shadow:0 8px 0 rgba(60,20,110,.35); }
+  .pc1 { background:linear-gradient(135deg, rgba(255,79,163,.9), rgba(139,92,246,.9)); }
+  .pc2 { background:linear-gradient(135deg, rgba(31,140,255,.9), rgba(139,92,246,.9)); }
+  .pc3 { background:linear-gradient(135deg, rgba(255,128,48,.92), rgba(255,64,140,.92)); }
+  .pc4 { background:linear-gradient(135deg, rgba(109,40,217,.92), rgba(37,99,235,.92)); }
+  .sticker { position:absolute; z-index:3; font-family:Unbounded; font-weight:900; color:#fff; border-radius:999px;
+             padding:12px 20px; font-size:17px; box-shadow:0 6px 0 rgba(27,16,48,.25); white-space:nowrap; pointer-events:none; }
+
+  /* the solid sheet that slides over the film once the toys have landed */
+  .sheet { position:relative; z-index:4; background:var(--cream); border-radius:56px 56px 0 0; margin-top:-8vh;
+           box-shadow:0 -20px 60px rgba(27,16,48,.25); }
+  .sheet section { min-height:auto; display:block; padding:12vh 6vw 6vh; }
+  .sec-head { display:flex; align-items:flex-end; justify-content:space-between; gap:20px; flex-wrap:wrap; margin-bottom:34px; }
+  .sec-head p { max-width:440px; line-height:1.5; font-size:17px; }
+
+  .projects { display:grid; grid-template-columns:repeat(auto-fill, minmax(min(280px,100%), 1fr)); gap:20px; }
+  .proj { background:#fff; border-radius:28px; overflow:hidden; box-shadow:0 8px 0 rgba(27,16,48,.1); cursor:zoom-in;
+          transition:transform .25s, box-shadow .25s; display:flex; flex-direction:column; }
+  .proj:hover { transform:translateY(-6px) rotate(-1deg); box-shadow:0 14px 0 rgba(27,16,48,.12); }
+  .proj .ph { aspect-ratio:4/3; overflow:hidden; background:#f3e7ff; }
+  .proj .ph img { width:100%; height:100%; object-fit:cover; transition:transform .4s; }
+  .proj:hover .ph img { transform:scale(1.06); }
+  .proj .tx { padding:18px 20px 22px; }
+  .proj h3 { font-family:Unbounded; font-size:17px; line-height:1.2; }
+  .proj p { margin-top:8px; line-height:1.45; font-size:15px; opacity:.8; }
+  .proj .tag { display:inline-block; font-size:12px; font-weight:800; padding:4px 10px; border-radius:999px; margin-bottom:10px; color:#fff; }
+
+  .marquee { overflow:hidden; padding:18px 0; margin:0 -6vw; background:#fff; border-block:3px solid var(--ink); }
+  .marquee .track { display:flex; gap:56px; align-items:center; width:max-content; animation:run 32s linear infinite; }
+  .marquee img { height:46px; width:auto; object-fit:contain; filter:saturate(1.1); }
+  @keyframes run { to { transform:translateX(-50%); } }
+
+  .cta-box { background:var(--ink); color:#fff; border-radius:44px; padding:clamp(28px,5vw,64px); display:grid;
+             grid-template-columns:1.1fr 1fr; gap:clamp(24px,4vw,56px); position:relative; overflow:hidden; }
+  .cta-box h2 { color:#fff; }
+  .cta-box > div > p { margin-top:18px; line-height:1.55; font-size:18px; opacity:.9; }
+  .offices { margin-top:28px; display:grid; gap:14px; }
+  .office { background:rgba(255,255,255,.08); border-radius:22px; padding:18px 20px; line-height:1.5; }
+  .office b { font-family:Unbounded; font-size:15px; display:block; margin-bottom:4px; color:var(--yellow); }
+  .office a { color:#fff; font-weight:800; }
+  form { display:grid; gap:12px; align-content:start; }
+  form label { font-weight:800; font-size:14px; opacity:.8; }
+  form input, form textarea { width:100%; font:inherit; font-size:16px; border:0; border-radius:18px; padding:14px 16px; background:#fff; color:var(--ink); }
+  form textarea { min-height:120px; resize:vertical; }
+  .check { display:flex; gap:10px; align-items:flex-start; font-size:14px; opacity:.85; }
+  .check input { width:auto; margin-top:3px; }
+  .big-btn { display:inline-block; font-family:Unbounded; font-weight:800; font-size:clamp(16px,1.5vw,20px); border:0; cursor:pointer;
+             background:var(--yellow); color:var(--ink); text-decoration:none; padding:18px 30px; border-radius:999px;
+             box-shadow:0 7px 0 #c79b00; transition:transform .2s; text-align:center; }
+  .big-btn:hover { transform:translateY(-3px) rotate(-1.5deg); }
+  .ghost { background:#fff; box-shadow:0 7px 0 rgba(27,16,48,.25); }
+  footer { padding:28px 6vw 40px; display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; font-size:14px; opacity:.7; }
+
+  .lightbox { position:fixed; inset:0; z-index:60; background:rgba(27,16,48,.92); display:grid; place-items:center; padding:4vw; cursor:zoom-out; }
+  .lightbox figure { max-width:min(1100px,100%); color:#fff; text-align:center; }
+  .lightbox img { max-height:76vh; margin:0 auto; border-radius:20px; }
+  .lightbox figcaption { margin-top:16px; }
+  .lightbox figcaption b { font-family:Unbounded; display:block; font-size:20px; margin-bottom:6px; }
+
+  .loader { position:fixed; inset:0; z-index:70; display:grid; place-items:center; background:var(--pink); color:#fff;
+            font-family:Unbounded; font-weight:900; font-size:28px; transition:opacity .6s; }
+  .loader img { width:96px; margin:0 auto 14px; filter:brightness(0) invert(1); animation:bob 1.2s ease-in-out infinite; }
+  .loader small { display:block; font-family:Manrope; font-size:16px; margin-top:10px; text-align:center; opacity:.9 }
+  .hint { position:fixed; bottom:24px; left:50%; transform:translateX(-50%); z-index:5; color:#fff; font-weight:800;
+          text-shadow:0 2px 8px rgba(0,0,0,.35); animation:bob2 1.4s ease-in-out infinite; transition:opacity .4s; text-align:center; }
+  @keyframes bob { 50% { transform:translateY(-8px); } }
+  @keyframes bob2 { 50% { transform:translate(-50%, 8px); } }
+
+  @media (max-width:900px) {
+    .stats { grid-template-columns:repeat(2, minmax(0,1fr)); }
+    .process, .cta-box { grid-template-columns:1fr; }
+  }
+  @media (max-width:760px) {
+    header nav .pill:not(.hot) { display:none; }
+    .grid4 { grid-template-columns:1fr; }
+    .sticker { display:none; }
+    section { padding:12vh 5vw; }
+    .sheet { border-radius:36px 36px 0 0; }
+  }
+</style>
+</head>
+<body>
+<div class="loader" id="loader"><div><img src="img/logo.webp" alt="">TOPSON<small id="loadtxt">Распаковываем игрушки… 0%</small></div></div>
+<canvas id="film"></canvas>
+<div class="veil"></div>
+<div class="progress" id="progress"></div>
+
+<header>
+  <a class="logo" href="#top"><img src="img/logo.webp" alt=""><b>TOPSON</b></a>
+  <nav>
+    <a class="pill" href="#about">О нас</a>
+    <a class="pill" href="#how">Как рождаются игрушки</a>
+    <a class="pill" href="#projects">Проекты</a>
+    <a class="pill hot" href="#contact">Обсудить проект</a>
+  </nav>
+</header>
+
+<div class="hint" id="hint">Прокрутите вниз ↓ в коробке кто-то есть</div>
+
+<main id="top">
+  <section id="hero">
+    <div class="layer plate pc1" data-speed="0.55" style="max-width:min(900px,100%)">
+      <h1 class="fit">Ваш бренд в&nbsp;виде <em>игрушки</em></h1>
+      <p class="lead">Производство игрушек, корпоративных сувениров и B2B-мерча оптом в России. Topson — от идеи до тиража.</p>
+      <div class="row"><a class="big-btn" href="#contact">Обсудить проект</a><a class="big-btn ghost" href="#projects">Все проекты</a></div>
+    </div>
+    <div class="sticker layer" data-speed="1.3" style="background:var(--blue); right:8vw; top:24vh; transform:rotate(6deg)">с логотипом ✦</div>
+    <div class="sticker layer" data-speed="1.45" style="background:var(--mint); color:var(--ink); right:20vw; bottom:18vh">оптом</div>
+  </section>
+
+  <section id="about">
+    <div class="card layer" data-speed="0.8">
+      <span class="kicker">О нас</span>
+      <h2 class="fit">Мы упаковываем смыслы в&nbsp;предметы</h2>
+      <p>TOPSON — производственно-креативное бюро, создающее эмоции для крупнейших брендов. 10+ лет мы превращаем идеи в тиражи, которые расходятся по миллионам рук.</p>
+      <p>Разработка и производство игрушек для программ лояльности, детских комбо-наборов, имиджевых мероприятий и мерча.</p>
+      <div class="row"><a class="big-btn" href="presentation.pdf" target="_blank">Скачать презентацию</a></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="stats layer" data-speed="1.12">
+      <div class="stat s1"><b>10+</b><span>лет на рынке</span></div>
+      <div class="stat s2"><b>50+</b><span>крупных клиентов</span></div>
+      <div class="stat s3"><b>1000+</b><span>проектов</span></div>
+      <div class="stat s4"><b>24/7</b><span>поддержка</span></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="card wide right layer" data-speed="0.85">
+      <span class="kicker">Компетенции</span>
+      <h2 class="fit">Наши ключевые компетенции</h2>
+      <p>Решаем полный спектр задач по созданию и производству игрушек и сувенирной продукции для бизнеса: игрушки с логотипом на заказ — от небольших тиражей для локальных акций до массового производства мягких игрушек для федеральных программ лояльности.</p>
+      <p>Опыт в HoReCa и ритейле — это готовые, проверенные решения для детских наборов и комбо-предложений. Мы понимаем, как создать продукт, который увеличит средний чек и частоту покупок. Ещё одно ключевое направление — сувениры для маркетинговых акций и корпоративных мероприятий.</p>
+      <p>Главное отличие — полный контроль качества на всех этапах: от 3D-моделирования и дизайна упаковки до многоступенчатого тестирования образцов. Сроки и бюджет (KPI) соблюдаем как единый производитель.</p>
+    </div>
+  </section>
+
+  <section id="safe">
+    <div class="layer" data-speed="0.9" style="width:100%">
+      <div class="plate pc2" style="margin-bottom:22px"><h2 class="fit" style="color:#fff">С нами <em>надёжно</em></h2></div>
+      <div class="grid4">
+        <div class="tile"><i>01</i><h3>Скорость за счёт локализации</h3><p>Производим в России и в среднем сокращаем логистику на 1–1,5 месяца по сравнению с полным циклом в Азии. Литьё запускаем здесь, качество контролируем вживую.</p></div>
+        <div class="tile"><i>02</i><h3>Глобальная инфраструктура</h3><p>Фабрики в России, Китае, Индии, Турции и Гонконге. Подбираем цену и логистику под проект, делаем мультирегиональные запуски.</p></div>
+        <div class="tile"><i>03</i><h3>Бюджет под KPI</h3><p>Решения под задачи программы лояльности, а не «красивая игрушка». Не предлагаем лишнего.</p></div>
+        <div class="tile"><i>04</i><h3>Безопасность и compliance</h3><p>Полное сопровождение сертификации и интеграция с «Честным знаком»: продукция попадёт на полку без штрафов и рисков для репутации.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="layer" data-speed="0.8" style="width:100%">
+      <div class="plate pc3" style="margin-bottom:22px"><h2 class="fit" style="color:#fff">Как рождаются игрушки?</h2>
+      <p class="lead" style="margin:12px 0 0">Мы отточили каждый этап, чтобы гарантировать качество и идеальное воплощение вашего бренда.</p></div>
+      <div class="process">
+        <div class="card"><h3>От идеи к дизайну</h3><ol class="steps">
+          <li><span><b>Концепция:</b> обсуждаем идею, цели и аудиторию</span></li>
+          <li><span><b>Скетчи:</b> дизайнеры создают эскизы</span></li>
+          <li><span><b>3D-моделирование:</b> детальная трёхмерная модель</span></li>
+          <li><span><b>Прототип:</b> физический образец для оценки</span></li></ol></div>
+        <div class="card"><h3>Производство и контроль</h3><ol class="steps">
+          <li><span><b>Подготовка:</b> спецификации и формы</span></li>
+          <li><span><b>Производство:</b> серийное изготовление</span></li>
+          <li><span><b>Контроль качества:</b> многоступенчатая проверка</span></li>
+          <li><span><b>Логистика:</b> доставка по всему миру</span></li></ol></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="landing" style="min-height:110vh; align-items:flex-start">
+    <div class="layer plate pc4" data-speed="0.7" style="margin:0 auto; text-align:center; max-width:min(900px,100%)">
+      <h2 class="fit" style="color:#fff; text-shadow:0 5px 0 rgba(27,16,48,.35)">Эти герои уже <em>работают на бренды</em></h2>
+      <p class="lead" style="margin:16px auto 0">Сберкоты, Космоэкипаж и Додозаврики, Драйвики, плюш для Burger King и ещё сотни героев.</p>
+    </div>
+  </section>
+
+  <div class="sheet" id="sheet">
+    <section id="projects">
+      <div class="sec-head">
+        <h2 class="fit">Проекты</h2>
+        <p>Нам доверяют крупные игроки. Нажмите на карточку, чтобы рассмотреть игрушку поближе.</p>
+      </div>
+      <div class="projects" id="projGrid"></div>
+    </section>
+
+    <div class="marquee"><div class="track" id="track"></div></div>
+
+    <section id="contact">
+      <div class="cta-box">
+        <div>
+          <h2 class="fit">Готовы создать уникальную игрушку для <em>вашего бренда?</em></h2>
+          <p>Поможем воплотить идею и создать игрушку, которая станет идеальным амбассадором вашего бренда.</p>
+          <div class="offices">
+            <div class="office"><b>Штаб-квартира, Москва</b>Проспект Мира, д. 95, стр. 1<br><a href="tel:+79161282999">+7 916 128 29 99</a></div>
+            <div class="office"><b>Представительство, Индия</b>Amer, Jaipur, Rajasthan-302027<br><a href="tel:+919971610262">+91 997 161 02 62</a></div>
+            <div class="office"><b>Email</b><a href="mailto:info@topson.ru">info@topson.ru</a></div>
+          </div>
+        </div>
+        <form id="form">
+          <label for="f-name">Имя</label><input id="f-name" required placeholder="Как к вам обращаться">
+          <label for="f-contact">Телефон или email</label><input id="f-contact" required placeholder="+7… или name@company.ru">
+          <label for="f-msg">Задача</label><textarea id="f-msg" placeholder="Например: 50 000 плюшевых маскотов для программы лояльности к весне"></textarea>
+          <label class="check"><input type="checkbox" required> Принимаю Политику конфиденциальности и Правила обработки персональных данных</label>
+          <button class="big-btn" type="submit">Отправить сообщение</button>
+        </form>
+      </div>
+    </section>
+    <footer><span>© Topson. Все права защищены.</span><span>Экспериментальный редизайн · оригинал — <a href="https://topson.co/">topson.co</a></span></footer>
+  </div>
+</main>
+
+<script>
+const PROJECTS = [
+  ["p00","Коллекционные игрушки для Бургер Кинг","Разработка и производство коллекции игрушек L.O.L. Surprise для программы лояльности","Burger King"],
+  ["p01","Производство мерча для Влада А4","Разработка и выпуск игрушек и мерча для популярного блогера Влада А4","Влад А4"],
+  ["p02","Брендированные джиббитсы для Альфа-Банка","Изготовление джиббитсов с корпоративным дизайном для Альфа-Банка","Альфа-Банк"],
+  ["p03","Промо-игрушки для Додо Пиццы","Серия игрушек «Космоэкипаж» для маркетинговых акций Додо","Додо Пицца"],
+  ["p04","Корпоративные сувениры для Сбера","Разработка и производство сувенирной продукции «Сберкот» для Сбербанка","Сбер"],
+  ["p05","Брендированные плюшевые игрушки","Эксклюзивное производство плюшевых игрушек для Burger King","Burger King"],
+  ["p06","Сувенирная продукция для Татнефти","Изготовление липунов для Татнефти","Татнефть"],
+  ["p07","Дикие Скричеры","Коллекционные игрушки для Бургер Кинг","Burger King"],
+  ["p08","Локеры А4","Производство сувениров для Бургер Кинг","Burger King"],
+  ["p09","Драйвики","Игрушки для топливной компании Газпромнефть","Газпромнефть"],
+  ["p10","Додозаврики","Промо-брелоки для пиццерий Додо Пицца","Додо Пицца"],
+  ["p11","Фишки А4","Игрушки для рекламной акции Бургер Кинг","Burger King"],
+  ["p12","Вайбики / Потатики / Трешики","Промо-сувениры для Альянса Региональных Ритейлеров","АРР"],
+];
+const PARTNERS = ["Burger_King","Alfa_bank","Sber_Bank","Dodo_Pizza","sts","lenta","tatneft-logo","Gazprom_Neft","A4","Spar","Mak_by","konfitreid","logo-sladskaz"];
+const TAGC = ["var(--pink)","var(--blue)","var(--violet)","#ff8a3d","#19b37d"];
+
+document.getElementById('projGrid').innerHTML = PROJECTS.map(([f,t,d,tag],i) => `
+  <article class="proj" data-i="${i}"><div class="ph"><img src="img/proj/${f}.webp" alt="${t}" loading="lazy"></div>
+  <div class="tx"><span class="tag" style="background:${TAGC[i % TAGC.length]}">${tag}</span><h3>${t}</h3><p>${d}</p></div></article>`).join('');
+document.getElementById('projGrid').addEventListener('click', e => {
+  const c = e.target.closest('.proj'); if (!c) return;
+  const [f,t,d] = PROJECTS[c.dataset.i], lb = document.createElement('div');
+  lb.className = 'lightbox'; lb.innerHTML = `<figure><img src="img/proj/${f}.webp" alt=""><figcaption><b>${t}</b>${d}</figcaption></figure>`;
+  lb.onclick = () => lb.remove(); document.body.appendChild(lb);
+});
+const logos = PARTNERS.map(p => `<img src="img/partners/${p}.webp" alt="${p}">`).join('');
+document.getElementById('track').innerHTML = logos + logos;
+
+// no backend in this experiment: the form opens a prepared email to Topson
+document.getElementById('form').addEventListener('submit', e => {
+  e.preventDefault();
+  const v = id => document.getElementById(id).value.trim();
+  const body = `Имя: ${v('f-name')}\nКонтакт: ${v('f-contact')}\n\n${v('f-msg')}`;
+  location.href = `mailto:info@topson.ru?subject=${encodeURIComponent('Заявка с сайта')}&body=${encodeURIComponent(body)}`;
+});
+
+// shrink .fit headings until they fit their container (long Russian words in a heavy display font)
+function fitText() {
+  for (const el of document.querySelectorAll('.fit')) {
+    el.style.fontSize = '';
+    let size = parseFloat(getComputedStyle(el).fontSize), guard = 40;
+    while (el.scrollWidth > el.clientWidth + 1 && size > 16 && guard--) { size *= 0.94; el.style.fontSize = size + 'px'; }
+  }
+}
+document.fonts.ready.then(fitText); addEventListener('resize', fitText);
+
+(() => {
+  const FRAMES = window.FRAME_COUNT || 362;          // set by build_frames.sh
+  const DIR = innerWidth < 900 ? 'frames_m' : 'frames';
+  const SRC = i => `${DIR}/f${String(i + 1).padStart(4, '0')}.webp`;
+  const canvas = document.getElementById('film'), ctx = canvas.getContext('2d');
+  const sheet = document.getElementById('sheet');
+  const imgs = new Array(FRAMES);
+  let loaded = 0, current = -1, target = 0, smooth = 0;
+
+  function resize() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = innerWidth * dpr; canvas.height = innerHeight * dpr; current = -1;
+  }
+  function draw(i) {
+    let k = i; while (k > 0 && !imgs[k]) k--;           // nearest loaded frame while the rest stream in
+    const img = imgs[k]; if (!img || k === current) return;
+    current = k;
+    const cw = canvas.width, ch = canvas.height, s = Math.max(cw / img.width, ch / img.height);
+    const w = img.width * s, h = img.height * s;
+    ctx.drawImage(img, (cw - w) / 2, (ch - h) / 2, w, h);
+  }
+  function load(i, tries = 3) {
+    return new Promise(res => {
+      const im = new Image(); im.decoding = 'async'; im.src = SRC(i);
+      im.onload = () => { imgs[i] = im; loaded++; res(); };
+      im.onerror = () => tries > 1 ? setTimeout(() => load(i, tries - 1).then(res), 500) : (loaded++, res());
+    });
+  }
+  async function preload() {
+    await load(0); draw(0);
+    const seen = new Set([0]), q = [];
+    for (const step of [8, 4, 2, 1]) for (let i = 0; i < FRAMES; i += step) if (!seen.has(i)) { seen.add(i); q.push(i); }
+    const txt = document.getElementById('loadtxt'), loader = document.getElementById('loader');
+    let hidden = false;
+    const worker = async () => { while (q.length) {
+      await load(q.shift());
+      txt.textContent = `Распаковываем игрушки… ${Math.round(loaded / FRAMES * 100)}%`;
+      if (!hidden && loaded > FRAMES / 8) { hidden = true; loader.style.opacity = 0; setTimeout(() => loader.remove(), 700); }
+    } };
+    await Promise.all(Array.from({ length: 6 }, worker));
+  }
+
+  const layers = [...document.querySelectorAll('.layer')];
+  const bar = document.getElementById('progress'), hint = document.getElementById('hint');
+  function onScroll() {
+    const max = document.documentElement.scrollHeight - innerHeight;
+    const filmEnd = Math.max(1, sheet.offsetTop - innerHeight * 0.6);   // toys finish landing as the sheet arrives
+    target = Math.min(1, scrollY / filmEnd) * (FRAMES - 1);
+    bar.style.width = (max > 0 ? scrollY / max * 100 : 0) + '%';
+    hint.style.opacity = scrollY > 40 ? 0 : 1;
+    for (const el of layers) {                          // each layer drifts at its own coefficient
+      const r = el.closest('section').getBoundingClientRect();
+      const off = r.top + r.height / 2 - innerHeight / 2;
+      const k = parseFloat(el.dataset.speed) - 1;
+      const base = el.style.transform.replace(/translate3d\([^)]*\)\s*/, '');
+      el.style.transform = `translate3d(0, ${(-off * k).toFixed(1)}px, 0) ${base}`;
+    }
+  }
+  function tick() { smooth += (target - smooth) * 0.14; draw(Math.round(smooth)); requestAnimationFrame(tick); }
+  addEventListener('resize', () => { resize(); onScroll(); });
+  addEventListener('scroll', onScroll, { passive: true });
+  resize(); onScroll(); preload(); tick();
+})();
+</script>
+</body>
+</html>
